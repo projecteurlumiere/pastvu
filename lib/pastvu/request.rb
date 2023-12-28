@@ -1,4 +1,3 @@
-require "uri"
 require "net/http"
 
 module Pastvu
@@ -19,12 +18,17 @@ module Pastvu
     end
 
     def build_uri
-      query = URI.encode_www_form({
-        method: @method,
-        params: JSON.dump(@params)
-      })
+      uri = Addressable::URI.new({ scheme: 'https', host: Pastvu.config.host })
 
-      URI::HTTPS.build(host: Pastvu.config.host, path: Pastvu.config.path, query: query)
+      template = Addressable::Template.new(uri.to_s + "{/path*}" + "{?query*}")
+
+      template.expand({
+        "path" => Pastvu.config.path,
+        "query" => {
+          "method" => @method,
+          "params" => JSON.dump(@params)
+        }
+      })
     end
   end
 end
