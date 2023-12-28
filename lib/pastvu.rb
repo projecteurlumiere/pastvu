@@ -9,9 +9,9 @@ require_relative "pastvu/version"
 require_relative "pastvu/configuration"
 require_relative "pastvu/request"
 require_relative "pastvu/basic_response"
-require_relative "pastvu/commentaries_collection"
-require_relative "pastvu/photos_collection"
-require_relative "pastvu/clusters_collection"
+require_relative "pastvu/commentary_collection"
+require_relative "pastvu/photo_collection"
+require_relative "pastvu/cluster_collection"
 
 module Pastvu
   class Error < StandardError; end
@@ -40,7 +40,7 @@ module Pastvu
       cid: cid
     }
 
-    CommentariesCollection.new request(__method__, params)
+    CommentaryCollection.new request(__method__, params)
   end
 
   def self.nearest_photos(geo:, **params)
@@ -55,7 +55,7 @@ module Pastvu
       skip: params[:skip]
     }.compact
 
-    PhotosCollection.new request(__method__, params)
+    PhotoCollection.new request(__method__, params)
   end
 
   def self.by_bounds(geometry:, z:, **params)
@@ -71,7 +71,7 @@ module Pastvu
       localWork: params[:localWork] || params[:local_work]
     }.compact
 
-    ClustersCollection.new request(__method__, params)
+    ClusterCollection.new request(__method__, params)
   end
 
   def self.request(method, params)
