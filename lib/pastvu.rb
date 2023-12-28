@@ -12,6 +12,7 @@ require_relative "pastvu/basic_response"
 require_relative "pastvu/commentary_collection"
 require_relative "pastvu/photo_collection"
 require_relative "pastvu/cluster_collection"
+require_relative "pastvu/photo"
 
 module Pastvu
   class Error < StandardError; end
