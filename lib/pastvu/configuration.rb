@@ -3,14 +3,11 @@ module Pastvu
     VALID_OPTIONS = %i[
       host
       path
-      output_format
     ]
 
     DEFAULT_VALUES = {
       default_host: "pastvu.com",
-      default_path: "/api2",
-      default_output_format: :json
-      # available formats: :json, :hash
+      default_path: "api2"
     }
 
     attr_accessor *VALID_OPTIONS

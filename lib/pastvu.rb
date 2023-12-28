@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
+require "bundler"
+Bundler.require
+
+require "json"
+
 require_relative "pastvu/version"
 require_relative "pastvu/configuration"
 require_relative "pastvu/request"
-require "json"
+require_relative "pastvu/basic_response"
+require_relative "pastvu/commentaries_collection"
+require_relative "pastvu/photos_collection"
+require_relative "pastvu/clusters_collection"
 
 module Pastvu
   class Error < StandardError; end
@@ -12,48 +20,77 @@ module Pastvu
     photo_info: "photo.giveForPage",
     comments: "comment.giveForObj",
     nearest_photos: "photo.giveNearestPhotos",
-    by_photos: "photo.getByBounds"
+    by_bounds: "photo.getByBounds"
   }
 
-  def self.photo_info(id)
-    raise(ArgumentError, "id must be integer") unless id.instance_of? Integer
+  def self.photo_info(cid)
+    raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
 
     params = {
-      cid: id
+      cid: cid
     }
 
-    request(__method__, params)
+    BasicResponse.new request(__method__, params)
   end
 
-  def self.comments(id)
-    raise(ArgumentError, "id must be integer") unless id.instance_of? Integer
+  def self.comments(cid)
+    raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
 
     params = {
-      cid: id
+      cid: cid
     }
 
-    request(__method__, params)
+    CommentariesCollection.new request(__method__, params)
   end
 
-  def self.nearest_photos(*args)
+  def self.nearest_photos(geo:, **params)
+    params = {
+      geo: geo,
+      except: params[:except],
+      distance: params[:distance],
+      year: params[:year],
+      year2: params[:year2],
+      type: params[:type],
+      limit: params[:limit],
+      skip: params[:skip]
+    }.compact
+
+    PhotosCollection.new request(__method__, params)
   end
 
-  def self.by_bounds(*args)
+  def self.by_bounds(geometry:, z:, **params)
+    geometry = format_geojson(geometry)
+    raise ArgumentError, "z must be Integer" unless z.instance_of?(Integer)
+
+    params = {
+      geometry: geometry,
+      z: z,
+      isPainting: params[:isPainting] || params[:is_painting],
+      year: params[:year],
+      year2: params[:year2],
+      localWork: params[:localWork] || params[:local_work]
+    }.compact
+
+    ClustersCollection.new request(__method__, params)
   end
 
   def self.request(method, params)
-    response = Request.new(METHODS[method], params).response
-
-    case config.output_format
-    when :json
-      response
-    when :hash
-      JSON.parse(response)
-    end
+    Request.new(METHODS[method], params).response
   end
 
   def self.config
     @config ||= Configuration.new
+  end
+
+  def self.format_geojson(geometry)
+    geometry = geometry.instance_of?(Hash) ? geometry : JSON.parse(geometry)
+    raise ArgumentError, "geometry figure type must be polygon or multipolygon" unless ["Polygon", "Multipolyigon"].any? { |t| t == geometry["type"] }
+
+    #? do I need validating geojson?
+    # geojson = Geojsonlint.validate(geometry)
+    # raise ArgumentError, "geometry must be valid geoJSON string or hash. Errors are: #{geojson.errors}" unless geojson.valid?
+
+    geometry
   end
 
   def self.configure(&block)

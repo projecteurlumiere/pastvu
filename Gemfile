@@ -10,3 +10,7 @@ gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 
 gem "webmock", "~> 3.19"
+
+# gem "geojsonlint"
+
+gem "addressable", "~> 2.8"
