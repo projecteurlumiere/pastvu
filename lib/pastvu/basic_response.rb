@@ -10,8 +10,8 @@ module Pastvu
       @response_body
     end
 
-    def to_h
-      JSON.parse(@response_body)
+    def to_hash
+      @parsed_response_body ||= JSON.parse(@response_body)
     end
   end
 end

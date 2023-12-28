@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Pastvu do
-  let(:success_json) { "{\"result\":{\"text\":\"success!\"}}" }
-  let(:success_hash) { { "result" => { "text" => "success!" } } }
+  let(:success_json) { "{\"result\":{\"text\":\"success!\",\"photos\":[1,2,3]}}" }
+  let(:success_hash) { { "result" => { "text" => "success!", "photos" => [1, 2, 3] } } }
 
   let(:polygon_hash) { JSON.parse('{"type":"Polygon","coordinates":[[[37.29034423828125,55.56902805913944],[37.95501708984375,55.56902805913944],[37.95501708984375,55.92150795277898],[37.29034423828125,55.92150795277898],[37.29034423828125,55.56902805913944]]]}') }
   let(:polygon_json) { polygon_hash.to_json }
@@ -24,7 +24,7 @@ RSpec.describe Pastvu do
     end
 
     it "returns hash" do
-      expect(described_class.photo_info(5).to_h).to eq(success_hash)
+      expect(described_class.photo_info(5).to_hash).to eq(success_hash)
     end
 
 
@@ -46,7 +46,7 @@ RSpec.describe Pastvu do
     end
 
     it "returns hash" do
-      expect(described_class.comments(23314).to_h).to eq(success_hash)
+      expect(described_class.comments(23314).to_hash).to eq(success_hash)
     end
 
     it "raises ArgumentError when supplied id is not integer" do
@@ -67,7 +67,7 @@ RSpec.describe Pastvu do
     end
 
     it "returns hash" do
-      expect(described_class.nearest_photos(geo: [37.82, -122.469322], limit: 12, except: 228481).to_h).to eq(success_hash)
+      expect(described_class.nearest_photos(geo: [37.82, -122.469322], limit: 12, except: 228481).to_hash).to eq(success_hash)
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.describe Pastvu do
       end
 
       it "returns hash" do
-        expect(described_class.by_bounds(geometry: polygon_hash, z: 11).to_h).to eq(success_hash)
+        expect(described_class.by_bounds(geometry: polygon_hash, z: 11).to_hash).to eq(success_hash)
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe Pastvu do
       end
 
       it "returns hash" do
-        expect(described_class.by_bounds(geometry: polygon_json, z: 11).to_h).to eq(success_hash)
+        expect(described_class.by_bounds(geometry: polygon_json, z: 11).to_hash).to eq(success_hash)
       end
     end
 
