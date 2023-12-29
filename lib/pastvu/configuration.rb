@@ -3,11 +3,13 @@ module Pastvu
     VALID_OPTIONS = %i[
       host
       path
+      ensure_successful_responses
     ]
 
     DEFAULT_VALUES = {
       default_host: "pastvu.com",
-      default_path: "api2"
+      default_path: "api2",
+      default_ensure_successful_responses: true
     }
 
     attr_accessor *VALID_OPTIONS

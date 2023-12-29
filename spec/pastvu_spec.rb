@@ -2,6 +2,7 @@
 
 RSpec.describe Pastvu do
   let(:success_json) { "{\"result\":{\"text\":\"success!\",\"photos\":[1,2,3]}}" }
+  let(:unsuccesful_json) { "{\"error\":{\"detais\":\"bad\"}}" }
   let(:success_hash) { { "result" => { "text" => "success!", "photos" => [1, 2, 3] } } }
 
   let(:polygon_hash) { JSON.parse('{"type":"Polygon","coordinates":[[[37.29034423828125,55.56902805913944],[37.95501708984375,55.56902805913944],[37.95501708984375,55.92150795277898],[37.29034423828125,55.92150795277898],[37.29034423828125,55.56902805913944]]]}') }
@@ -9,6 +10,19 @@ RSpec.describe Pastvu do
 
   it "has a version number" do
     expect(described_class::VERSION).not_to be nil
+  end
+
+  context "when server returns error" do
+    before do
+      uri = URI.parse('https://pastvu.com/api2?method=photo.giveForPage&params={"cid":5}')
+
+      stub_request(:get, uri).
+        to_return(body: unsuccesful_json)
+    end
+
+    it "raises RuntimeError" do
+      expect { described_class.photo_info(5) }.to raise_error(RuntimeError)
+    end
   end
 
   context "when requesting photo information" do
