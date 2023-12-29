@@ -10,9 +10,10 @@ require_relative "pastvu/configuration"
 require_relative "pastvu/request"
 require_relative "pastvu/basic_response"
 require_relative "pastvu/commentary_collection"
+require_relative "pastvu/commentary"
 require_relative "pastvu/photo_collection"
-require_relative "pastvu/cluster_collection"
 require_relative "pastvu/photo"
+require_relative "pastvu/cluster_collection"
 
 module Pastvu
   class Error < StandardError; end
