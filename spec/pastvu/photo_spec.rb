@@ -36,6 +36,14 @@ RSpec.describe Pastvu::Photo do
     end
   end
 
+  it "returns hash" do
+    expect(instance.to_hash).to eq(photo_attr)
+  end
+
+  it "returns json" do
+    expect(instance.to_json).to eq(JSON.dump(photo_attr))
+  end
+
   context "when providing links" do
     it "returns standard size file link" do
       expect(instance.standard).to eq(link_standard)
