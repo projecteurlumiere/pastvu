@@ -1,12 +1,11 @@
 module Pastvu
-  class PhotoCollection < BasicCollection
+  class PhotoCollection < Collection
     include Enumerable
 
-    def each
-      @hash ||= self.to_hash
-      @hash["result"]["photos"].each do |photo_hash|
-        yield Photo.new photo_hash
-      end
+    def initialize(attributes)
+      super attributes
+      @path = %w[result photos]
+      @model = Photo
     end
   end
 end

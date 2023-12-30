@@ -1,12 +1,11 @@
 module Pastvu
-  class CommentaryCollection < BasicCollection
+  class CommentaryCollection < Collection
     include Enumerable
 
-    def each
-      @hash ||= self.to_hash
-      @hash["result"]["comments"].each do |comment_hash|
-        yield Commentary.new comment_hash
-      end
+    def initialize(attributes)
+      super attributes
+      @path = %w[result comments]
+      @model = Commentary
     end
 
     def users

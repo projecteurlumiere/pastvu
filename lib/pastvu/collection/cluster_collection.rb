@@ -1,10 +1,9 @@
 module Pastvu
-  class ClusterCollection < BasicResponse
-    def each
-      @hash ||= self.to_hash
-      @hash["result"]["clusters"].each do |cluster_hash|
-        yield Cluster.new cluster_hash
-      end
+  class ClusterCollection < Collection
+    def initialize(attributes)
+      super attributes
+      @path = %w[result clusters]
+      @model = Cluster
     end
   end
 end
