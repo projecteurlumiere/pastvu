@@ -1,5 +1,5 @@
 module Pastvu
-  class CommentaryCollection < BasicResponse
+  class CommentaryCollection < BasicCollection
     include Enumerable
 
     def each

@@ -1,7 +1,7 @@
 require "open-uri"
 
 module Pastvu
-  class Photo
+  class Photo < Model
     # VALID_ATTRIBUTES = %w[cid s file title dir geo year ccount]
     # attr_accessor *VALID_ATTRIBUTES
 
@@ -35,17 +35,6 @@ module Pastvu
 
     def thumb
       thumbnail
-    end
-
-    def to_hash
-      instance_variables.each_with_object({}) do |var, object|
-        var = var[1..-1]
-        object[var.to_sym] = method(var).call
-      end
-    end
-
-    def to_json
-      JSON.dump(to_hash)
     end
   end
 end

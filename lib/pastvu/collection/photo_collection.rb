@@ -1,5 +1,5 @@
 module Pastvu
-  class PhotoCollection < BasicResponse
+  class PhotoCollection < BasicCollection
     include Enumerable
 
     def each

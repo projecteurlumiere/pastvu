@@ -1,17 +1,9 @@
 require "json"
 
 module Pastvu
-  class Commentary
-    def initialize(attributes)
-      attributes.each do |key, value|
-        instance_variable_set("@#{key}", value)
-        self.class.send(:attr_accessor, key)
-      end
-
-      populate_replies unless @comments.nil?
-    end
-
+  class Commentary < Model
     def replies
+      populate_replies unless @comments.nil?
       @replies
     end
 
@@ -34,10 +26,6 @@ module Pastvu
         var = var[1..-1]
         object[var.to_sym] = method(var).call
       end
-    end
-
-    def to_json
-      JSON.dump(to_hash)
     end
 
     private
