@@ -46,6 +46,10 @@ RSpec.describe Pastvu do
         to_return(body: success_json)
     end
 
+    it "returns BasicResponse" do
+      expect(described_class.photo_info(5)).to be_a(Pastvu::BasicResponse)
+    end
+
     it "returns json" do
       expect(described_class.photo_info(5).to_json).to eq(success_json)
     end
@@ -86,6 +90,10 @@ RSpec.describe Pastvu do
         to_return(body: success_json)
     end
 
+    it "returns CommentaryCollection" do
+      expect(described_class.comments(23314)).to be_a(Pastvu::CommentaryCollection)
+    end
+
     it "returns json" do
       expect(described_class.comments(23314).to_json).to eq(success_json)
     end
@@ -107,6 +115,10 @@ RSpec.describe Pastvu do
         to_return(body: success_json)
     end
 
+    it "returns PhotoCollection" do
+      expect(described_class.nearest_photos(geo: [37.82, -122.469322], limit: 12, except: 228481)).to be_a(Pastvu::PhotoCollection)
+    end
+
     it "returns json" do
       expect(described_class.nearest_photos(geo: [37.82, -122.469322], limit: 12, except: 228481).to_json).to eq(success_json)
     end
@@ -124,7 +136,12 @@ RSpec.describe Pastvu do
         to_return(body: success_json)
     end
 
+
     describe "when geojson hash is an argument" do
+      it "returns BoundResponse" do
+        expect(described_class.by_bounds(geometry: polygon_hash, z: 11)).to be_a(Pastvu::BoundResponse)
+      end
+
       it "returns json" do
         expect(described_class.by_bounds(geometry: polygon_hash, z: 11).to_json).to eq(success_json)
       end
@@ -135,6 +152,10 @@ RSpec.describe Pastvu do
     end
 
     describe "when geojson string is argument" do
+      it "returns BoundResponse" do
+        expect(described_class.by_bounds(geometry: polygon_json, z: 11)).to be_a(Pastvu::BoundResponse)
+      end
+
       it "returns json" do
         expect(described_class.by_bounds(geometry: polygon_json, z: 11).to_json).to eq(success_json)
       end
