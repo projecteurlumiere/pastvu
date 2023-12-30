@@ -47,7 +47,7 @@ RSpec.describe Pastvu do
     end
 
     it "returns BasicResponse" do
-      expect(described_class.photo_info(5)).to be_a(Pastvu::BasicResponse)
+      expect(described_class.photo_info(5)).to be_a(Pastvu::InformationResponse)
     end
 
     it "returns json" do

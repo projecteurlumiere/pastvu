@@ -9,15 +9,16 @@ require_relative "pastvu/version"
 require_relative "pastvu/configuration"
 require_relative "pastvu/request"
 require_relative "pastvu/basic_response"
-require_relative "pastvu/bound_response"
 require_relative "pastvu/collection"
 require_relative "pastvu/model"
-require_relative "pastvu/collection/cluster_collection"
-require_relative "pastvu/collection/commentary_collection"
-require_relative "pastvu/collection/photo_collection"
-require_relative "pastvu/model/cluster"
-require_relative "pastvu/model/commentary"
-require_relative "pastvu/model/photo"
+require_relative "pastvu/response/bound_response"
+require_relative "pastvu/response/information_response"
+require_relative "pastvu/cluster/cluster_collection"
+require_relative "pastvu/cluster/cluster"
+require_relative "pastvu/commentary/commentary_collection"
+require_relative "pastvu/commentary/commentary"
+require_relative "pastvu/photo/photo_collection"
+require_relative "pastvu/photo/photo"
 
 module Pastvu
   class Error < StandardError; end
@@ -36,7 +37,7 @@ module Pastvu
       cid: cid
     }
 
-    BasicResponse.new request(__method__, params)
+    InformationResponse.new request(__method__, params)
   end
 
   def self.comments(cid)
