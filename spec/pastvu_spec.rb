@@ -23,6 +23,19 @@ RSpec.describe Pastvu do
     it "raises RuntimeError" do
       expect { described_class.photo_info(5) }.to raise_error(RuntimeError)
     end
+
+    it "does not raise RuntimeError if configured (via config)" do
+      described_class.config.ensure_successful_responses = false
+      expect { described_class.photo_info(5) }.not_to raise_error
+    end
+
+    it "does not raise RuntimeError if configured (via configure block)" do
+      described_class.config.ensure_successful_responses = false
+      described_class.configure do |c|
+        c.ensure_successful_responses = false
+      end
+      expect { described_class.photo_info(5) }.not_to raise_error
+    end
   end
 
   context "when requesting photo information" do

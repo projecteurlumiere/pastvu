@@ -2,20 +2,22 @@ require "json"
 
 module Pastvu
   class BasicResponse
+    attr_accessor :json, :hash
+
     def initialize(response_body)
-      @json_body = response_body
+      @json = response_body
       if Pastvu.config.ensure_successful_responses
-        self.to_hash
-        raise RuntimeError, "Unexpected response from the server: #{@hash_body}"  unless @hash_body["result"]
+        @hash = self.to_hash
+        raise RuntimeError, "Unexpected response from the server: #{@hash}"  unless @hash["result"]
       end
     end
 
     def to_json
-      @json_body
+      @hash ? JSON.dump(@hash) : @json
     end
 
     def to_hash
-      @hash_body ||= JSON.parse(@json_body)
+      JSON.parse(@json)
     end
   end
 end
