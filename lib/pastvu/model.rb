@@ -1,3 +1,5 @@
+require "json"
+
 module Pastvu
   class Model
     def initialize(attributes)

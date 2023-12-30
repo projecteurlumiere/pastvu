@@ -1,7 +1,9 @@
 module Pastvu
   class Collection < BasicResponse
+    include Enumerable
+
     def initialize(attr)
-      attr.instance_of?(Hash) ? @hash = attr : super and return
+      attr.instance_of?(Hash) ? @hash = attr : (super and return)
     end
 
     def each

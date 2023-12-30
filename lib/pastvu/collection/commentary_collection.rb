@@ -1,7 +1,5 @@
 module Pastvu
   class CommentaryCollection < Collection
-    include Enumerable
-
     def initialize(attributes)
       super attributes
       @path = %w[result comments]
