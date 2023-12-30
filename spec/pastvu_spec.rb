@@ -58,6 +58,24 @@ RSpec.describe Pastvu do
     it "raises ArgumentError when supplied id is not integer" do
       expect { described_class.photo_info("5") }.to raise_error(ArgumentError)
     end
+
+    it "returns modified data if response hash was modified" do
+      new_hash = { random: "stuff" }
+      instance = described_class.photo_info(5)
+      instance.hash = new_hash
+
+      expect(instance.to_json).to eq(JSON.dump(new_hash))
+      expect(instance.to_hash).to eq(new_hash)
+    end
+
+    it "returns modified data if response json was modified" do
+      new_json = JSON.dump({ random: "stuff" })
+      instance = described_class.photo_info(5)
+      instance.json = new_json
+
+      expect(instance.to_hash).to eq(JSON.parse(new_json))
+      expect(instance.to_json).to eq(new_json)
+    end
   end
 
   context "when requesting commentaries for a photo" do

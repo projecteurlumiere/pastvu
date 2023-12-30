@@ -17,7 +17,7 @@ module Pastvu
     end
 
     def to_hash
-      JSON.parse(@json)
+      @hash || JSON.parse(@json)
     end
   end
 end
