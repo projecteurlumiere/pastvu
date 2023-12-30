@@ -63,6 +63,7 @@ module Pastvu
   def self.by_bounds(geometry:, z:, **params)
     geometry = format_geojson(geometry)
     raise ArgumentError, "z must be Integer" unless z.instance_of?(Integer)
+    params[:localWork] = true if z >= 17
 
     params = {
       geometry: geometry,
@@ -86,7 +87,8 @@ module Pastvu
 
   def self.format_geojson(geometry)
     geometry = geometry.instance_of?(Hash) ? geometry : JSON.parse(geometry)
-    raise ArgumentError, "geometry figure type must be polygon or multipolygon" unless ["Polygon", "Multipolyigon"].any? { |t| t == geometry["type"] }
+    permitted_types  = %w[Polygon Multipolyigon]
+    raise ArgumentError, "expect geojson geometry type to be in #{permitted_types}" unless permitted_types.any? { |t| t == geometry["type"] }
 
     #? do I need validating geojson?
     # geojson = Geojsonlint.validate(geometry)

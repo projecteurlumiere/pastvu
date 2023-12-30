@@ -141,5 +141,14 @@ RSpec.describe Pastvu do
       expect { described_class.by_bounds(geometry: polygon_hash, z: 11) }.to raise_error(ArgumentError)
       expect { described_class.by_bounds(geometry: polygon_json, z: 11) }.to raise_error(ArgumentError)
     end
+
+    it "sets localWork parameter if zoom >= 17" do
+      uri = 'https://pastvu.com/api2?method=photo.getByBounds&params={"geometry":{"type":"Polygon","coordinates":[[[37.29034423828125,55.56902805913944],[37.95501708984375,55.56902805913944],[37.95501708984375,55.92150795277898],[37.29034423828125,55.92150795277898],[37.29034423828125,55.56902805913944]]]},"z":18,"localWork":true}'
+
+      stub_request(:get, uri).
+        to_return(body: success_json)
+
+      expect(described_class.by_bounds(geometry: polygon_hash, z: 18).to_json).to eq(success_json)
+    end
   end
 end
