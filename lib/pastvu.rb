@@ -36,6 +36,10 @@ module Pastvu
     InformationResponse.new request(__method__, params)
   end
 
+  def self.photo(cid)
+    self.photo_info(cid).to_photo
+  end
+
   def self.comments(cid)
     raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Pastvu do
-  let(:success_json) { "{\"result\":{\"text\":\"success!\",\"photos\":[1,2,3]}}" }
+  let(:success_json) { "{\"result\":{\"text\":\"success!\",\"photos\":[1,2,3], \"photo\":[\"I\",\"am\",\"a\",\"photo\"]}}" }
   let(:unsuccesful_json) { "{\"error\":{\"detais\":\"bad\"}}" }
-  let(:success_hash) { { "result" => { "text" => "success!", "photos" => [1, 2, 3] } } }
+  let(:success_hash) { { "result" => { "text" => "success!", "photos" => [1, 2, 3], "photo" => %w[I am a photo] } } }
 
   let(:polygon_hash) { JSON.parse('{"type":"Polygon","coordinates":[[[37.29034423828125,55.56902805913944],[37.95501708984375,55.56902805913944],[37.95501708984375,55.92150795277898],[37.29034423828125,55.92150795277898],[37.29034423828125,55.56902805913944]]]}') }
   let(:polygon_json) { polygon_hash.to_json }
@@ -48,6 +48,11 @@ RSpec.describe Pastvu do
 
     it "returns BasicResponse" do
       expect(described_class.photo_info(5)).to be_a(Pastvu::InformationResponse)
+    end
+
+    it "returns Photo" do
+      expect(described_class.photo_info(5).to_photo).to be_a(Pastvu::Photo)
+      expect(described_class.photo(5)).to be_a(Pastvu::Photo)
     end
 
     it "returns json" do
