@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "bundler"
-Bundler.require
-
 require "json"
 
 require_relative "pastvu/version"
@@ -11,6 +8,7 @@ require_relative "pastvu/request"
 require_relative "pastvu/basic_response"
 require_relative "pastvu/collection"
 require_relative "pastvu/model"
+
 require_relative "pastvu/response/bound_response"
 require_relative "pastvu/response/information_response"
 require_relative "pastvu/cluster/cluster_collection"

@@ -1,4 +1,5 @@
 require "net/http"
+require "addressable"
 
 module Pastvu
   class Request
