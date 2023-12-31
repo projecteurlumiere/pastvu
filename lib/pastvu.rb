@@ -19,8 +19,6 @@ require_relative "pastvu/photo/photo_collection"
 require_relative "pastvu/photo/photo"
 
 module Pastvu
-  class Error < StandardError; end
-
   METHODS = {
     photo_info: "photo.giveForPage",
     comments: "comment.giveForObj",

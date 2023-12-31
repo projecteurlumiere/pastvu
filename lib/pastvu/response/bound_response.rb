@@ -7,8 +7,6 @@ module Pastvu
 
     def photos
       @hash ||= self.to_hash
-      hash = @hash.clone
-      hash["result"]["clusters"] = []
       PhotoCollection.new @hash
     end
   end

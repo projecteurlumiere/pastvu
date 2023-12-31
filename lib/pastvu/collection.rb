@@ -3,7 +3,7 @@ module Pastvu
     include Enumerable
 
     def initialize(attr)
-      attr.instance_of?(Hash) ? @hash = attr : (super and return)
+      attr.instance_of?(Hash) ? @hash = attr : super
     end
 
     def each
@@ -17,8 +17,8 @@ module Pastvu
     private
 
     def reduce_hash
-      @path.reduce(@hash) do |new_hash, key, _value|
-        new_hash.fetch(key)
+      @path.reduce(@hash) do |hash, path_key|
+        hash.fetch(path_key)
       end
     end
   end
