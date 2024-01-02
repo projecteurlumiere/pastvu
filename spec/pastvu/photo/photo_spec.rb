@@ -44,6 +44,27 @@ RSpec.describe Pastvu::Photo do
     expect(instance.to_json).to eq(JSON.dump(photo_attr))
   end
 
+  context "when requesting new objects" do
+    let(:success_json) { "{\"result\":{\"text\":\"success!\",\"photos\":[1,2,3], \"photo\":[\"I\",\"am\",\"a\",\"photo\"]}}" }
+
+    it "returns a new Photo instance with full information" do
+      uri = URI.parse('https://pastvu.com/api2?method=photo.giveForPage&params={"cid":449459}')
+      stub_request(:get, uri).
+        to_return(body: success_json)
+
+      expect(instance.reload).to be_a Pastvu::Photo
+    end
+
+    it "returns comments for a relevant photo" do
+      uri = 'https://pastvu.com/api2?method=comment.giveForObj&params={"cid":449459}'
+
+      stub_request(:get, uri).
+        to_return(body: success_json)
+
+      expect(instance.comments).to be_a Pastvu::CommentaryCollection
+    end
+  end
+
   context "when providing links" do
     it "returns standard size file link" do
       expect(instance.standard).to eq(link_standard)
