@@ -10,5 +10,9 @@ module Pastvu
       @hash ||= self.to_hash
       @hash["result"]["users"]
     end
+
+    def photo
+      Pastvu.photo @hash["result"]["cid"]
+    end
   end
 end

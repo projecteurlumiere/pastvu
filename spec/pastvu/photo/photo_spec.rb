@@ -45,7 +45,7 @@ RSpec.describe Pastvu::Photo do
   end
 
   context "when requesting new objects" do
-    let(:success_json) { "{\"result\":{\"text\":\"success!\",\"photos\":[1,2,3], \"photo\":[\"I\",\"am\",\"a\",\"photo\"]}}" }
+    let(:success_json) { "{\"result\":{\"text\":\"success!\",\"photos\":[1,2,3], \"photo\":[\"I\",\"am\",\"a\",\"photo\"]}}"}
 
     it "returns a new Photo instance with full information" do
       uri = URI.parse('https://pastvu.com/api2?method=photo.giveForPage&params={"cid":449459}')
@@ -61,7 +61,7 @@ RSpec.describe Pastvu::Photo do
       stub_request(:get, uri).
         to_return(body: success_json)
 
-      expect(instance.comments).to be_a Pastvu::CommentaryCollection
+        expect(instance.comments).to be_a Pastvu::CommentaryCollection
     end
   end
 
