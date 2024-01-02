@@ -1,5 +1,3 @@
-require "open-uri"
-
 module Pastvu
   class Photo < Model
     # VALID_ATTRIBUTES = %w[cid s file title dir geo year ccount]
@@ -9,9 +7,7 @@ module Pastvu
       raise ArgumentError, "expect size to be correct symbol" unless %i[original standard thumbnail thumb].include?(size)
       raise ArgumentError, "expect file extension to be .jpeg or .jpg" unless path[-4..-1] == ".jpg" || path[-5..-1] == ".jpeg"
 
-      download = URI.parse(method(size).call).open
-      IO.copy_stream(download, path)
-      File.new(path)
+      Request.download(method(size).call, path)
     end
 
     def standard

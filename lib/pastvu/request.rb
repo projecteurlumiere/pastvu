@@ -1,5 +1,6 @@
 require "net/http"
 require "addressable"
+require "open-uri"
 
 module Pastvu
   class Request
@@ -10,6 +11,12 @@ module Pastvu
       @params = params
 
       request(build_uri)
+    end
+
+    def self.download(uri, path)
+      download = URI.parse(uri).open
+      IO.copy_stream(download, path)
+      File.new(path)
     end
 
     def request(uri)
