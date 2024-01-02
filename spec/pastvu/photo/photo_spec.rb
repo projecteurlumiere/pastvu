@@ -41,7 +41,11 @@ RSpec.describe Pastvu::Photo do
   end
 
   it "returns json" do
-    expect(instance.to_json).to eq(JSON.dump(photo_attr))
+    expect { JSON.parse(instance.to_json) }.not_to raise_error
+
+    hash = JSON.parse(instance.to_json).transform_keys(&:to_sym)
+
+    expect(hash).to eq(photo_attr)
   end
 
   context "when requesting new objects" do
