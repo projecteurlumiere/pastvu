@@ -7,6 +7,7 @@ require_relative "pastvu/basic_response"
 require_relative "pastvu/collection"
 require_relative "pastvu/model"
 require_relative "pastvu/parser"
+require_relative "pastvu/params_validator"
 
 require_relative "pastvu/response/bound_response"
 require_relative "pastvu/response/information_response"
@@ -17,6 +18,9 @@ require_relative "pastvu/commentary/commentary"
 require_relative "pastvu/photo/photo_collection"
 require_relative "pastvu/photo/photo"
 
+require_relative "pastvu/params_validator/type_check"
+require_relative "pastvu/params_validator/value_check"
+
 module Pastvu
   METHODS = {
     photo_info: "photo.giveForPage",
@@ -26,11 +30,13 @@ module Pastvu
   }
 
   def self.photo_info(cid)
-    raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
+    # raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
 
     params = {
       cid: cid
     }
+
+    ParamsValidator.validate params
 
     InformationResponse.new request(__method__, params)
   end
@@ -40,11 +46,13 @@ module Pastvu
   end
 
   def self.comments(cid)
-    raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
+    # raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
 
     params = {
       cid: cid
     }
+
+    ParamsValidator.validate params
 
     CommentaryCollection.new request(__method__, params)
   end
@@ -61,22 +69,26 @@ module Pastvu
       skip: params[:skip]
     }.compact
 
+    ParamsValidator.validate params
+
     PhotoCollection.new request(__method__, params)
   end
 
   def self.by_bounds(geometry:, z:, **params)
-    geometry = format_geojson(geometry)
-    raise ArgumentError, "z must be Integer" unless z.instance_of?(Integer)
+    # geometry = format_geojson(geometry)
+    # raise ArgumentError, "z must be Integer" unless z.instance_of?(Integer)
     params[:localWork] = true if z >= 17
 
     params = {
-      geometry: geometry,
+      geometry: geometry.instance_of?(Hash) ? geometry : Parser.to_hash(geometry),
       z: z,
       isPainting: params[:isPainting] || params[:is_painting],
       year: params[:year],
       year2: params[:year2],
       localWork: params[:localWork] || params[:local_work]
     }.compact
+
+    ParamsValidator.validate params
 
     BoundResponse.new request(__method__, params)
   end
@@ -90,10 +102,6 @@ module Pastvu
   end
 
   def self.format_geojson(geometry)
-    geometry = geometry.instance_of?(Hash) ? geometry : Parser.to_hash(geometry)
-    permitted_types  = %w[Polygon Multipolyigon]
-    raise ArgumentError, "expect geojson geometry type to be in #{permitted_types}" unless permitted_types.any? { |t| t == geometry["type"] }
-
     #? do I need validating geojson?
     # geojson = Geojsonlint.validate(geometry)
     # raise ArgumentError, "geometry must be valid geoJSON string or hash. Errors are: #{geojson.errors}" unless geojson.valid?
