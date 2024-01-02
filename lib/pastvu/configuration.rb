@@ -4,16 +4,16 @@ module Pastvu
       host
       path
       ensure_successful_responses
-      params_type_check
-      params_value_check
+      check_params_type
+      check_params_value
     ]
 
     DEFAULT_VALUES = {
       default_host: "pastvu.com",
       default_path: "api2",
       default_ensure_successful_responses: true,
-      default_params_type_check: true,
-      default_params_value_check: true
+      default_check_params_type: true,
+      default_check_params_value: true
     }
 
     attr_accessor *VALID_OPTIONS

@@ -6,7 +6,7 @@ module Pastvu
       except:    Integer,
       geo:       Array, # [lat and lon]
       geometry:  Hash, # [geoJSON]
-      isPaiting: TrueClass || FalseClass,
+      isPainting: TrueClass || FalseClass,
       limit:     Integer, # <= 30
       localWork: TrueClass || FalseClass,
       skip:      Integer,

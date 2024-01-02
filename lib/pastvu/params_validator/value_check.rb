@@ -3,15 +3,19 @@ require "method_source"
 module Pastvu
   class ValueCheck
     VALIDATIONS = {
-      distance: ->(d) { d <= 1000000 },
+      distance: ->(d) { d > 0 && d <= 1000000 },
       geo:     [->(g) { g.size == 2 },
                 ->(g) { g.all? { |coordinate| coordinate.instance_of?(Float) || coordinate.instance_of?(Integer) } }],
       geometry: ->(g) do
-                  permitted_types  = %w[Polygon Multipolyigon]
-                  permitted_types.any? { |t| t == g["type"] }
+                  begin
+                    permitted_types  = %w[Polygon Multipolyigon]
+                    permitted_types.any? { |t| t == g["type"] }
+                  rescue TypeError
+                    false
+                  end
                 end,
-      limit:    ->(l) { l <= 30 },
-      type:     ->(t) { [%w[photo painting].any?(t)] }
+      limit:    ->(l) { l > 0 && l <= 30 },
+      type:     ->(t) { %w[photo painting].any?(t) }
     }
 
     def self.validate(params)
