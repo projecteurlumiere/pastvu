@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require "json"
-
 require_relative "pastvu/version"
 require_relative "pastvu/configuration"
 require_relative "pastvu/request"
 require_relative "pastvu/basic_response"
 require_relative "pastvu/collection"
 require_relative "pastvu/model"
+require_relative "pastvu/parser"
 
 require_relative "pastvu/response/bound_response"
 require_relative "pastvu/response/information_response"
@@ -91,7 +90,7 @@ module Pastvu
   end
 
   def self.format_geojson(geometry)
-    geometry = geometry.instance_of?(Hash) ? geometry : JSON.parse(geometry)
+    geometry = geometry.instance_of?(Hash) ? geometry : Parser.to_hash(geometry)
     permitted_types  = %w[Polygon Multipolyigon]
     raise ArgumentError, "expect geojson geometry type to be in #{permitted_types}" unless permitted_types.any? { |t| t == geometry["type"] }
 

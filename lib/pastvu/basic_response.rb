@@ -1,5 +1,3 @@
-require "json"
-
 module Pastvu
   class BasicResponse
     attr_accessor :json, :hash
@@ -13,11 +11,11 @@ module Pastvu
     end
 
     def to_json
-      @hash ? JSON.dump(@hash) : @json
+      @hash ? Parser.to_json(@hash) : @json
     end
 
     def to_hash
-      @hash || JSON.parse(@json)
+      @hash || Parser.to_hash(@json)
     end
   end
 end

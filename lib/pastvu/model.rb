@@ -1,5 +1,3 @@
-require "json"
-
 module Pastvu
   class Model
     def initialize(attributes)
@@ -17,7 +15,7 @@ module Pastvu
     end
 
     def to_json
-      JSON.dump(to_hash)
+      Parser.to_json(to_hash)
     end
   end
 end
