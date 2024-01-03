@@ -19,13 +19,13 @@ module Pastvu
     }
 
     def self.validate(params)
-      errors = []
+      errors = {}
 
       VALIDATIONS.each do |k, v|
         next if params[k].nil?
-        next if v.instance_of?(Array) ? call_each(v, params[k]) : v.call(params[k])
 
-        errors << [k, v]
+        next if v.instance_of?(Array) ? call_each(v, params[k]) : v.call(params[k])
+        errors.merge!({ k.to_sym => [params[k], v] })
       end
 
       if errors.empty?
@@ -36,11 +36,11 @@ module Pastvu
     end
 
     def self.report_errors(errors)
-      report = errors.map do |error|
-        error[0]
+      report = errors.map do |k, v|
+        "\n#{k}: #{v[0]}"
       end.join(", ")
 
-      raise ArgumentError, "expect the following params to pass validations: #{report}"
+      raise ArgumentError, "expect params to pass validations\n #{report}"
     end
 
     def self.call_each(array, argument)

@@ -17,23 +17,24 @@ module Pastvu
     }
 
     def self.validate(params)
-      errors = []
-      ALLOWED_TYPES.each do |k, v|
-        next if params[k].nil?
-        next if params[k].instance_of?(v)
+      errors = {}
+      ALLOWED_TYPES.each do |k, type|
+        param = params[k]
+        next if param.nil?
+        next if param.instance_of?(type)
 
-        errors << [k, v]
+        errors.merge!({ k.to_sym => [param, type] })
       end
 
       errors.empty? ? true : report_errors(errors)
     end
 
     def self.report_errors(errors)
-      report = errors.map do |e|
-        "#{e[0]} must be #{e[1]}"
+      report = errors.map do |k, v|
+        "\n#{k}: #{v[0]} must be #{v[1]}"
       end.join(", ")
 
-      raise ArgumentError, "expect correct params type: #{report}"
+      raise ArgumentError, "expect correct params type\n #{report}"
     end
   end
 end
