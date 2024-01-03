@@ -30,8 +30,6 @@ module Pastvu
   }
 
   def self.photo_info(cid)
-    # raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
-
     params = {
       cid: cid
     }
@@ -46,8 +44,6 @@ module Pastvu
   end
 
   def self.comments(cid)
-    # raise ArgumentError, "id must be integer" unless cid.instance_of? Integer
-
     params = {
       cid: cid
     }
@@ -75,8 +71,6 @@ module Pastvu
   end
 
   def self.by_bounds(geometry:, z:, **params)
-    # geometry = format_geojson(geometry)
-    # raise ArgumentError, "z must be Integer" unless z.instance_of?(Integer)
     params[:localWork] = true if z >= 17
 
     params = {
@@ -99,14 +93,6 @@ module Pastvu
 
   def self.config
     @config ||= Configuration.new
-  end
-
-  def self.format_geojson(geometry)
-    #? do I need validating geojson?
-    # geojson = Geojsonlint.validate(geometry)
-    # raise ArgumentError, "geometry must be valid geoJSON string or hash. Errors are: #{geojson.errors}" unless geojson.valid?
-
-    geometry
   end
 
   def self.configure(&block)

@@ -1,5 +1,3 @@
-require "method_source"
-
 module Pastvu
   class ValueCheck
     VALIDATIONS = {
