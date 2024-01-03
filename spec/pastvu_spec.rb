@@ -30,7 +30,6 @@ RSpec.describe Pastvu do
     end
 
     it "does not raise RuntimeError if configured (via configure block)" do
-      described_class.config.ensure_successful_responses = false
       described_class.configure do |c|
         c.ensure_successful_responses = false
       end
@@ -55,6 +54,9 @@ RSpec.describe Pastvu do
       expect(described_class.photo(5)).to be_a(Pastvu::Photo)
     end
 
+    # BasicResponse is supposed to return the json it received from the server
+    # It should be intact and identical to the one on server
+    # Thus, it is possible to compare this equality
     it "returns json" do
       expect(described_class.photo_info(5).to_json).to eq(success_json)
     end
@@ -62,7 +64,6 @@ RSpec.describe Pastvu do
     it "returns hash" do
       expect(described_class.photo_info(5).to_hash).to eq(success_hash)
     end
-
 
     it "raises ArgumentError when supplied id is not integer" do
       expect { described_class.photo_info("5") }.to raise_error(ArgumentError)
@@ -140,7 +141,6 @@ RSpec.describe Pastvu do
       stub_request(:get, uri).
         to_return(body: success_json)
     end
-
 
     describe "when geojson hash is an argument" do
       it "returns BoundResponse" do
