@@ -1,19 +1,19 @@
 module Pastvu
   class TypeCheck
     ALLOWED_TYPES = {
-      cid:       Integer,
-      distance:  Integer, # <= 1000000 (meters)
-      except:    Integer,
-      geo:       Array, # [lat and lon]
-      geometry:  Hash, # [geoJSON]
-      isPainting: TrueClass || FalseClass,
-      limit:     Integer, # <= 30
-      localWork: TrueClass || FalseClass,
-      skip:      Integer,
-      type:      String, # "photo" or "painting"
-      year:      Integer,
-      year2:     Integer,
-      z:         Integer
+      cid:        Integer,
+      distance:   Integer, # <= 1000000 (meters)
+      except:     Integer,
+      geo:        Array, # [lat and lon]
+      geometry:   Hash, # [geoJSON]
+      isPainting: [TrueClass, FalseClass],
+      limit:      Integer, # <= 30
+      localWork:  [TrueClass, FalseClass],
+      skip:       Integer,
+      type:       String, # "photo" or "painting"
+      year:       Integer,
+      year2:      Integer,
+      z:          Integer
     }
 
     def self.validate(params)
@@ -21,7 +21,7 @@ module Pastvu
       ALLOWED_TYPES.each do |k, type|
         param = params[k]
         next if param.nil?
-        next if param.instance_of?(type)
+        next if self.correct_type? param, type
 
         errors.merge!({ k.to_sym => [param, type] })
       end
@@ -35,6 +35,14 @@ module Pastvu
       end.join(", ")
 
       raise ArgumentError, "expect correct params type\n #{report}"
+    end
+
+    def self.correct_type?(param, type)
+      if type.instance_of?(Array)
+        type.any? { |type| param.instance_of?(type) }
+      else
+        param.instance_of?(type)
+      end
     end
   end
 end

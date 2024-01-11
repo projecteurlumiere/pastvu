@@ -1,7 +1,7 @@
 module Pastvu
   class ValueCheck
     VALIDATIONS = {
-      distance: ->(d) { d > 0 && d <= 1000000 },
+      distance: ->(d) { d.between?(1, 1_000_000) },
       geo:     [->(g) { g.size == 2 },
                 ->(g) { g.all? { |coordinate| coordinate.instance_of?(Float) || coordinate.instance_of?(Integer) } }],
       geometry: ->(g) do
@@ -12,7 +12,7 @@ module Pastvu
                     false
                   end
                 end,
-      limit:    ->(l) { l > 0 && l <= 30 },
+      limit:    ->(l) { l.between?(1, 30) },
       type:     ->(t) { %w[photo painting].any?(t) }
     }
 

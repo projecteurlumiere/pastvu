@@ -36,4 +36,13 @@ RSpec.describe Pastvu::TypeCheck do
   it "raises error if multiple params are incorrect" do
     expect { described_class.validate bad_params }.to raise_error(ArgumentError)
   end
+
+  it "does not raise error if a boolean param is false" do
+    params[:isPainting] = false
+    expect{ described_class.validate params }.not_to raise_error
+
+    params[:isPainting] = true
+    params[:localWork] = false
+    expect{ described_class.validate params }.not_to raise_error
+  end
 end
