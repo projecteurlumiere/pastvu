@@ -23,10 +23,10 @@ require_relative "pastvu/params_validator/value_check"
 
 module Pastvu
   METHODS = {
-    photo_info: "photo.giveForPage",
-    comments: "comment.giveForObj",
+    photo_info:     "photo.giveForPage",
+    comments:       "comment.giveForObj",
     nearest_photos: "photo.giveNearestPhotos",
-    by_bounds: "photo.getByBounds"
+    by_bounds:      "photo.getByBounds"
   }
 
   def self.photo_info(cid)
@@ -55,31 +55,31 @@ module Pastvu
 
   def self.nearest_photos(geo:, **params)
     params = {
-      geo: geo,
-      except: params[:except],
+      geo:      geo,
+      except:   params[:except],
       distance: params[:distance],
-      year: params[:year],
-      year2: params[:year2],
-      type: params[:type],
-      limit: params[:limit],
-      skip: params[:skip]
+      year:     params[:year],
+      year2:    params[:year2],
+      type:     params[:type],
+      limit:    params[:limit],
+      skip:     params[:skip]
     }.compact
 
     ParamsValidator.validate params
 
-    PhotoCollection.new request(__method__, params)
+    PhotoCollection.new request(__method__, params), params
   end
 
   def self.by_bounds(geometry:, z:, **params)
     params[:localWork] = true if z >= 17
 
     params = {
-      geometry: geometry.instance_of?(Hash) ? geometry : Parser.to_hash(geometry),
-      z: z,
+      geometry:   geometry.instance_of?(Hash) ? geometry : Parser.to_hash(geometry),
+      z:          z,
       isPainting: params[:isPainting] || params[:is_painting],
-      year: params[:year],
-      year2: params[:year2],
-      localWork: params[:localWork] || params[:local_work]
+      year:       params[:year],
+      year2:      params[:year2],
+      localWork:  params[:localWork] || params[:local_work]
     }.compact
 
     ParamsValidator.validate params

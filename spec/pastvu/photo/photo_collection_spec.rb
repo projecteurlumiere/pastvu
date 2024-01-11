@@ -17,4 +17,51 @@ RSpec.describe Pastvu::PhotoCollection do
     expect(set.size).to be(1)
     expect(set.first).to be Pastvu::Photo
   end
+
+  context "when asking for photos by bounds" do
+    it "raise if when calling next method" do
+      expect { subject.next }.to raise_error(RuntimeError)
+    end
+  end
+
+  context "when asking for nearest photos" do
+    subject(:instance) { described_class.new photos_json, params }
+
+    let(:params) { {geo: [10, 20]} }
+
+    it "makes a request for next 30 photos" do
+      expect(Pastvu).to receive(:nearest_photos) do |args|
+        expect(args[:skip]).to eq(30)
+      end
+
+      instance.next
+    end
+
+    it "makes a request for next photos when some photos are already skipped" do
+      params[:skip] = 30
+
+      expect(Pastvu).to receive(:nearest_photos) do |args|
+        expect(args[:skip]).to eq(60)
+      end
+
+      instance.next
+    end
+
+    it "makes a request for a custom number of photos" do
+      params[:skip] = 30
+
+      expect(Pastvu).to receive(:nearest_photos) do |args|
+        expect(args[:skip]).to eq(35)
+      end
+
+      instance.next(5)
+    end
+
+    it "raises error if asked more than 30 photos or less than one" do
+      expect { instance.next(1.5) }.to raise_error(ArgumentError)
+      expect { instance.next(31) }.to raise_error(ArgumentError)
+      expect { instance.next(0) }.to raise_error(ArgumentError)
+      expect { instance.next(-1) }.to raise_error(ArgumentError)
+    end
+  end
 end
