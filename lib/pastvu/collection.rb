@@ -7,6 +7,8 @@ module Pastvu
     end
 
     def each
+      return to_enum(:each) unless block_given?
+
       @hash ||= self.to_hash
 
       reduce_hash.each do |model_hash|
