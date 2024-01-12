@@ -14,13 +14,13 @@ module Pastvu
     end
 
     def self.download(uri, path)
-      download = URI.parse(uri).open
+      download = URI.parse(uri).open("User-Agent" => Pastvu.config.user_agent)
       IO.copy_stream(download, path)
       File.new(path)
     end
 
     def request(uri)
-      Net::HTTP.get_response(uri) do |response|
+      Net::HTTP.get_response(uri, "User-Agent" => Pastvu.config.user_agent) do |response|
         @response = response.body
       end
     end
