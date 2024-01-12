@@ -1,5 +1,7 @@
-## [Unreleased]
+## [1.0.0] - 2023-1-12
 
-## [0.1.0] - 2023-12-23
+- First release!
 
-- Initial release
+## [0.0.1] - 2023-1
+
+- Unreleased pre-release
