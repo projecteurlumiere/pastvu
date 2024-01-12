@@ -2,7 +2,7 @@ module Pastvu
   class Commentary < Model
     def replies
       populate_replies unless @comments.nil?
-      @replies
+      @replies ||= []
     end
 
     def replies=(value)
