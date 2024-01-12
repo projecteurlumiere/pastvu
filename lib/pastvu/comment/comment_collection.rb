@@ -1,9 +1,9 @@
 module Pastvu
-  class CommentaryCollection < Collection
+  class CommentCollection < Collection
     def initialize(attributes)
       super attributes
       @path = %w[result comments]
-      @model = Commentary
+      @model = Comment
     end
 
     def users

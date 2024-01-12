@@ -13,8 +13,8 @@ require_relative "pastvu/response/bounds_response"
 require_relative "pastvu/response/information_response"
 require_relative "pastvu/cluster/cluster_collection"
 require_relative "pastvu/cluster/cluster"
-require_relative "pastvu/commentary/commentary_collection"
-require_relative "pastvu/commentary/commentary"
+require_relative "pastvu/comment/comment_collection"
+require_relative "pastvu/comment/comment"
 require_relative "pastvu/photo/photo_collection"
 require_relative "pastvu/photo/photo"
 
@@ -50,7 +50,7 @@ module Pastvu
 
     ParamsValidator.validate params
 
-    CommentaryCollection.new request(__method__, params)
+    CommentCollection.new request(__method__, params)
   end
 
   def self.nearest_photos(geo:, **params)

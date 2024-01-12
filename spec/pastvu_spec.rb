@@ -96,8 +96,8 @@ RSpec.describe Pastvu do
         to_return(body: success_json)
     end
 
-    it "returns CommentaryCollection" do
-      expect(described_class.comments(23314)).to be_a(Pastvu::CommentaryCollection)
+    it "returns CommentCollection" do
+      expect(described_class.comments(23314)).to be_a(Pastvu::CommentCollection)
     end
 
     it "returns json" do

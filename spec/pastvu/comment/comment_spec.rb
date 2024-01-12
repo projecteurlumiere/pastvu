@@ -1,7 +1,7 @@
 require "tempfile"
 require "fileutils"
 
-RSpec.describe Pastvu::Commentary do
+RSpec.describe Pastvu::Comment do
   subject(:instance) { described_class.new comment_attr }
 
   let(:comment_attr) do
@@ -45,7 +45,7 @@ RSpec.describe Pastvu::Commentary do
   end
 
   it "returns replies as Comment class" do
-    expect(instance.replies.first).to be_a Pastvu::Commentary
+    expect(instance.replies.first).to be_a Pastvu::Comment
   end
 
   it "returns commments as mere Array of Hashes" do

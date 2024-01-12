@@ -1,5 +1,5 @@
 module Pastvu
-  class Commentary < Model
+  class Comment < Model
     def replies
       populate_replies unless @comments.nil?
       @replies ||= []
@@ -30,7 +30,7 @@ module Pastvu
 
     def populate_replies
       @replies = @comments.map do |comment|
-        Commentary.new comment
+        Comment.new comment
       end
     end
   end

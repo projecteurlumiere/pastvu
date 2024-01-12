@@ -63,7 +63,7 @@ RSpec.describe Pastvu::Photo do
       stub_request(:get, uri).
         to_return(body: success_json)
 
-        expect(instance.comments).to be_a Pastvu::CommentaryCollection
+        expect(instance.comments).to be_a Pastvu::CommentCollection
     end
   end
 
