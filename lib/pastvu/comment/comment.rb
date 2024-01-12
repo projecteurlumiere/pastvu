@@ -9,20 +9,12 @@ module Pastvu
       @replies = value
     end
 
-    def last_changed
-      @lastChanged
-    end
-
-    def last_changed=(value)
-      @lastChanged = value
-    end
-
     def to_hash
       instance_variables.each_with_object({}) do |var, object|
         next if var == :@replies
 
         var = var[1..-1]
-        object[var.to_sym] = method(var).call
+        object[camelize(var).to_sym] = method(var).call
       end
     end
 
