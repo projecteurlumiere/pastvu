@@ -8,11 +8,11 @@ PastVu gem is a Ruby wrapper for [PastVu API](https://docs.pastvu.com/en/dev/api
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add pastvu --version "~> 1.0.0"
+    $ bundle add pastvu
 
 or add the following line to the Gemfile manually
 
-    # gem "pastvu", "~> 1.0.0"
+    # gem "pastvu"
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
@@ -291,6 +291,10 @@ Pastvu.configure do |c|
   c.check_params_value # "true"
 end
 ```
+## To do list
+
+* Rework tests to use [VCR gem](https://github.com/vcr/vcr)
+* Refactor tests
 
 ## Contributing
 
