@@ -1,5 +1,5 @@
 module Pastvu
-  class BoundResponse < BasicResponse
+  class BoundsResponse < BasicResponse
     def clusters
       @hash ||= self.to_hash
       ClusterCollection.new @hash

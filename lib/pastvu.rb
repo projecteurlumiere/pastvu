@@ -9,7 +9,7 @@ require_relative "pastvu/collection"
 require_relative "pastvu/parser"
 require_relative "pastvu/params_validator"
 
-require_relative "pastvu/response/bound_response"
+require_relative "pastvu/response/bounds_response"
 require_relative "pastvu/response/information_response"
 require_relative "pastvu/cluster/cluster_collection"
 require_relative "pastvu/cluster/cluster"
@@ -84,7 +84,7 @@ module Pastvu
 
     ParamsValidator.validate params
 
-    BoundResponse.new request(__method__, params)
+    BoundsResponse.new request(__method__, params)
   end
 
   def self.request(method, params)

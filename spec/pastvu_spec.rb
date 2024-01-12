@@ -143,8 +143,8 @@ RSpec.describe Pastvu do
     end
 
     describe "when geojson hash is an argument" do
-      it "returns BoundResponse" do
-        expect(described_class.by_bounds(geometry: polygon_hash, z: 11)).to be_a(Pastvu::BoundResponse)
+      it "returns BoundsResponse" do
+        expect(described_class.by_bounds(geometry: polygon_hash, z: 11)).to be_a(Pastvu::BoundsResponse)
       end
 
       it "returns json" do
@@ -157,8 +157,8 @@ RSpec.describe Pastvu do
     end
 
     describe "when geojson string is argument" do
-      it "returns BoundResponse" do
-        expect(described_class.by_bounds(geometry: polygon_json, z: 11)).to be_a(Pastvu::BoundResponse)
+      it "returns BoundsResponse" do
+        expect(described_class.by_bounds(geometry: polygon_json, z: 11)).to be_a(Pastvu::BoundsResponse)
       end
 
       it "returns json" do
