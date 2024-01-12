@@ -5,6 +5,7 @@ RSpec.describe Pastvu::TypeCheck do
       distance: 5000,
       except: 6,
       geo: [5.2, 10.303],
+      geometry: Pastvu::Parser.to_hash('{"coordinates":[[[2.34218629483172,48.88623415508624],[2.34218629483172,48.88425956838617],[2.3449771858020085,48.88425956838617],[2.3449771858020085,48.88623415508624],[2.34218629483172,48.88623415508624]]],"type":"Polygon"}'),
       isPainting: true,
       limit: 30,
       localWork: true,

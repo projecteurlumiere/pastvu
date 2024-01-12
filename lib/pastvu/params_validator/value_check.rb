@@ -13,7 +13,7 @@ module Pastvu
                   end
                 end,
       limit:    ->(l) { l.between?(1, 30) },
-      type:     ->(t) { %w[photo painting].any?(t) }
+      type:     ->(t) { %w[photo painting].any?(t.downcase) }
     }
 
     def self.validate(params)
@@ -23,6 +23,7 @@ module Pastvu
         next if params[k].nil?
 
         next if v.instance_of?(Array) ? call_each(v, params[k]) : v.call(params[k])
+
         errors.merge!({ k.to_sym => [params[k], v] })
       end
 
