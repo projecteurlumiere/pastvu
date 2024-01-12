@@ -61,4 +61,17 @@ RSpec.describe Pastvu::Comment do
     expect(instance.to_json).to be_a String
     expect { instance.to_json }.not_to raise_error
   end
+
+  context "when shallowly snakecasing/camelizing attributes" do
+    subject(:instance) { described_class.new comment_attr[:comments][0] }
+
+    it "snakecases variables" do
+      expect { instance.last_changed }.not_to raise_error
+      expect { instance.lastChanged }.to raise_error(NoMethodError)
+    end
+
+    it "does not camelizes variables when returns hash" do
+      expect(instance.to_hash).to eq(comment_attr[:comments][0])
+    end
+  end
 end

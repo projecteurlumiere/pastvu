@@ -13,7 +13,6 @@ RSpec.describe Pastvu::CommentCollection do
     uri = URI.parse('https://pastvu.com/api2?method=photo.giveForPage&params={"cid":5}')
     stub_request(:get, uri).
       to_return(body: "{\"result\":{\"photo\":{\"s\":5,\"file\":\"t/t/m/ttmrs80811yfro4md7.jpeg\",\"title\":\"View of the Marin Tow...Golden Gate Bridge under construction\",\"dir\":\"nw\",\"geo\":[37.82287,-122.47985],\"year\":1934}}}")
-      binding.irb
       expect(instance.photo).to be_a Pastvu::Photo
   end
 
