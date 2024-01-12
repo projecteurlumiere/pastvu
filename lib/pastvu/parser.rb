@@ -11,11 +11,11 @@ module Pastvu
       # symbolize_keys hash
     end
 
-    def self.symbolize_keys(hash)
-      hash.transform_keys do |k|
-        k.to_sym
-        symbolize_keys(hash[k]) if hash[k].instance_of?(Hash)
-      end
-    end
+    # def self.symbolize_keys(hash)
+    #   hash.transform_keys do |k|
+    #     k.to_sym
+    #     symbolize_keys(hash[k]) if hash[k].instance_of?(Hash)
+    #   end
+    # end
   end
 end
