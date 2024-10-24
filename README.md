@@ -97,9 +97,9 @@ photo_collection.each_with_index do |photo, i|
   desired_path_to_photo = "awesome_photo_number_#{i + 1}.jpg"
 
   # All return File object:
-  photo.download(desired_path_to_photo, :standard)
-  photo.download(desired_path_to_photo, :original)
-  photo.download(desired_path_to_photo, :thumb) # or :thumbnail
+  photo.download(:standard, desired_path_to_photo)
+  photo.download(:original, desired_path_to_photo)
+  photo.download(:thumb, desired_path_to_photo) # or :thumbnail
 end
 ```
 

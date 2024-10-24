@@ -11,7 +11,7 @@ module Pastvu
 
     DEFAULT_VALUES = {
       default_host: "pastvu.com",
-      default_path: "api2",
+      default_path: "/api2",
       default_user_agent: "Ruby PastVu Gem/#{VERSION}, #{RUBY_PLATFORM}, Ruby/#{RUBY_VERSION}",
       default_ensure_successful_responses: true,
       default_check_params_type: true,
