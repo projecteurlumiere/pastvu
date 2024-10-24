@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
     end
   end
 
-  spec.add_dependency "addressable", "~> 2.8"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "webmock", "~> 3.19"
 end
