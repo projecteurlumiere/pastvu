@@ -28,6 +28,24 @@ require "pastvu"
 
 Refer to [PastVu API documentation](https://docs.pastvu.com/en/dev/api) for available interactions, parameters, parameter types and response examples.
 
+Here are several use-cases for the gem depending on what you may want to request from PastVu:
+
+- [Nearest Photos](#scenario-getting-nearest-photos)
+  - [Requesting](#step-one---request-data)
+  - [Working with the requested data](#step-two---work-with-data)
+    - [Manipulating attributes](#manipulate-attributes)
+    - [Downloading photos](#download-photos)
+    - [Requesting additional info](#request-more-data-about-the-photo)
+- [Photos inside geographical bounds](#scenario-getting-photos-inside-geographical-bounds)
+  - [Preparing request](#step-one---prepare-request)
+  - [Requesting](#step-two---request-data)
+  - [Manipulating requested data](#step-three---manipulate-data)
+    - [Working with requested photos](#photos)
+    - [Working with requested clusters](#clusters)
+- [Full photo information](#scenario-getting-full-photo-information)
+- [Commentaries for a photo](#scenario-getting-commentaries-for-a-photo)
+- [Adjusting gem's configuration](#configuration)
+
 ### Scenario: Getting nearest photos
 
 #### Step one - request data
