@@ -1,3 +1,6 @@
+## [1.0.3] - 2025-10-22
+- No changes
+
 ## [1.0.2] - 2024-10-24
 - Remove Addressable dependency
 - Fix README errors
